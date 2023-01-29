@@ -6,6 +6,8 @@ function App() {
     webPage: false,
     seoService: false,
     googleAds: false,
+    pageNumber: 0,
+    pageLanguages: 0,
   });
 
   const [total, setTotal] = useState(0);
@@ -14,7 +16,10 @@ function App() {
     setFormData((prevFormData) => {
       return {
         ...prevFormData,
-        [event.target.name]: event.target.checked,
+        [event.target.name]:
+          event.target.type === "checkbox"
+            ? event.target.checked
+            : event.target.value,
       };
     });
     handleTotal(event);
@@ -60,6 +65,30 @@ function App() {
         name="webPage"
       />
       <label htmlFor="webPage">Una pàgina web (500€)</label>
+      {formData.webPage && (
+        <div className="webPageExtras">
+          <label htmlFor="pageNumber">Número de páginas</label>
+          <input
+            type="number"
+            id="pageNumber"
+            placeholder="0"
+            onInput={handleChange}
+            name="pageNumber"
+            value={formData.pageNumber}
+          />
+          <br />
+          <label htmlFor="pageLanguages">Número de idiomas</label>
+          <input
+            type="number"
+            id="pageLanguages"
+            placeholder="0"
+            onInput={handleChange}
+            name="pageLanguages"
+            value={formData.pageLanguages}
+          />
+        </div>
+      )}
+
       <br />
       <input
         type="checkbox"
@@ -79,7 +108,13 @@ function App() {
       />
       <label htmlFor="googleAds">Una campanya de Google Ads (200€)</label>
       <br />
-      <p>Preu: {total}€</p>
+      <p>
+        Preu:{" "}
+        {total > 0 && formData.webPage === true
+          ? total + formData.pageNumber * formData.pageLanguages * 30
+          : total}
+        €
+      </p>
     </form>
   );
 }
