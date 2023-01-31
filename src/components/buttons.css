@@ -4,3 +4,8 @@ button {
     width: 25px;
     height: 25px
 }
+
+.textBox {
+    width: 50px;
+    margin: 0px;
+}

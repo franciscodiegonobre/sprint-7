@@ -10,6 +10,7 @@ const Buttons = (props) => {
         id={props.inputId}
         onInput={props.handleClick}
         name={props.inputName}
+        className="textBox"
       ></input>
       <button onClick={props.subtract}>-</button>
     </>
