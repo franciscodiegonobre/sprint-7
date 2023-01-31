@@ -1,7 +1,9 @@
 import "./App.css";
 import { useState } from "react";
+import Buttons from "./components/Buttons";
 
 function App() {
+  // const to handle states
   const [formData, setFormData] = useState({
     webPage: false,
     seoService: false,
@@ -12,6 +14,7 @@ function App() {
 
   const [total, setTotal] = useState(0);
 
+  //function to handle each event change => checkbox or number
   function handleChange(event) {
     setFormData((prevFormData) => {
       return {
@@ -25,6 +28,7 @@ function App() {
     handleTotal(event);
   }
 
+  //function with conditions to set the total, called by the function above
   function handleTotal(event) {
     if (event.target.name === "webPage" && event.target.checked) {
       setTotal((prevTotal) => prevTotal + 500);
@@ -54,8 +58,33 @@ function App() {
     }
   }
 
+  //functions related to the buttons component
+  function addPageNumber() {
+    let newFormData = { ...formData };
+    newFormData.pageNumber++;
+    setFormData(newFormData);
+  }
+
+  function subtractPageNumber() {
+    let newFormData = { ...formData };
+    newFormData.pageNumber--;
+    setFormData(newFormData);
+  }
+
+  function addPageLanguages() {
+    let newFormData = { ...formData };
+    newFormData.pageLanguages++;
+    setFormData(newFormData);
+  }
+
+  function subtractLanguages() {
+    let newFormData = { ...formData };
+    newFormData.pageLanguages--;
+    setFormData(newFormData);
+  }
+
   return (
-    <form>
+    <div>
       <p>¿Qué quieres hacer?</p>
       <input
         type="checkbox"
@@ -66,27 +95,29 @@ function App() {
       />
       <label htmlFor="webPage">Una pàgina web (500€)</label>
       {formData.webPage && (
-        <div className="webPageExtras">
-          <label htmlFor="pageNumber">Número de páginas</label>
-          <input
-            type="number"
-            id="pageNumber"
-            placeholder="0"
-            onInput={handleChange}
-            name="pageNumber"
-            value={formData.pageNumber}
-          />
-          <br />
-          <label htmlFor="pageLanguages">Número de idiomas</label>
-          <input
-            type="number"
-            id="pageLanguages"
-            placeholder="0"
-            onInput={handleChange}
-            name="pageLanguages"
-            value={formData.pageLanguages}
-          />
-        </div>
+        <>
+          <div className="webPageExtras">
+            <label htmlFor="pageNumber">Número de páginas</label>
+            <Buttons
+              add={addPageNumber}
+              subtract={subtractPageNumber}
+              inputId={"pageNumber"}
+              handleClick={handleChange}
+              inputName={"pageNumber"}
+              inputValue={formData.pageNumber}
+            />
+            <br />
+            <label htmlFor="pageLanguages">Número de idiomas</label>
+            <Buttons
+              add={addPageLanguages}
+              subtract={subtractLanguages}
+              inputId={"pageLanguages"}
+              handleClick={handleChange}
+              inputName={"pageLanguages"}
+              inputValue={formData.pageLanguages}
+            />
+          </div>
+        </>
       )}
 
       <br />
@@ -115,7 +146,7 @@ function App() {
           : total}
         €
       </p>
-    </form>
+    </div>
   );
 }
 
