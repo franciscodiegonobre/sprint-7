@@ -1,18 +1,32 @@
 import "./App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Buttons from "./components/Buttons";
 
 function App() {
   // const to handle states
-  const [formData, setFormData] = useState({
-    webPage: false,
-    seoService: false,
-    googleAds: false,
-    pageNumber: 0,
-    pageLanguages: 0,
-  });
+  const [formData, setFormData] = useState(
+    JSON.parse(localStorage.getItem("formData")) || {
+      webPage: false,
+      seoService: false,
+      googleAds: false,
+      pageNumber: 0,
+      pageLanguages: 0,
+    }
+  );
 
-  const [total, setTotal] = useState(0);
+  const [total, setTotal] = useState(
+    JSON.parse(localStorage.getItem("total")) || 0
+  );
+
+  //Handle side effects for each state
+
+  useEffect(() => {
+    localStorage.setItem("formData", JSON.stringify(formData));
+  }, [formData]);
+
+  useEffect(() => {
+    localStorage.setItem("total", JSON.stringify(total));
+  }, [total]);
 
   //function to handle each event change => checkbox or number
   function handleChange(event) {
