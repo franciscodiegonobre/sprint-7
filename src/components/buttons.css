@@ -1,0 +1,11 @@
+button {
+    background-color: brown;
+    border-radius: 5px;
+    width: 25px;
+    height: 25px
+}
+
+.textBox {
+    width: 50px;
+    margin: 0px;
+}
